@@ -3,7 +3,7 @@ const creepSpawner = {
   run: function(creep) {
     // Minimum number of workers
     const minimumNumberOfHarvesters = 10;
-    const minimumNumberOfUpgraders = 4;
+    const minimumNumberOfUpgraders = 5;
     const minimumNumberOfBuilders = 4;
     const minimumNumberOfRepairers = 1;
     const minimumNumberOfWallRepairers = 1;
@@ -48,27 +48,20 @@ const creepSpawner = {
     } else if (numberofRepairers < minimumNumberOfRepairers) {
       newName = Game.spawns.Spawn1.createCreep(
         [WORK, WORK, CARRY, MOVE],
-        undefined,
+        `Repairer_${Game.time.toString()}`,
         { role: "repairer" }
       );
       nameCounterRepairers++;
-    } else if (numberofWallRepairs < minimumNumberOfWallRepairers) {
-      nameCounterWallsRepairers++;
+    } else if (numberofWallRepairers < minimumNumberOfWallRepairers) {
       newName = Game.spawns.Spawn1.createCreep(
         [WORK, WORK, CARRY, MOVE],
-        undefined,
+        `WallRepairer_${Game.time.toString()}`,
         { role: "wallrepairer" }
-      );
-    } else if (numberofBuilders < minimumNumberOfBuilders) {
-      newName = Game.spawns.Spawn1.createCreep(
-        [WORK, WORK, CARRY, MOVE],
-        undefined,
-        { role: "builder" }
       );
     } else {
       newName = Game.spawns.Spawn1.createCreep(
         [WORK, CARRY, MOVE, MOVE],
-        undefined,
+        `Builder_${Game.time.toString()}`,
         { role: "builder" }
       );
     }
