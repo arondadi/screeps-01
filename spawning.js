@@ -5,14 +5,8 @@ const creepSpawner = {
     const minimumNumberOfHarvesters = 10;
     const minimumNumberOfUpgraders = 4;
     const minimumNumberOfBuilders = 4;
-    // const minimumNumberOfRepairers = 1;
-    // const minimumNumberOfWallRepairers = 1;
-
-    let nameCounterHarvesters = 0;
-    let nameCounterBuilders = 0;
-    let nameCounterUpgraders = 0;
-    // let nameCounterRepairers = 0;
-    // let nameCounterWallsRepairers = 0;
+    const minimumNumberOfRepairers = 1;
+    const minimumNumberOfWallRepairers = 1;
 
     // Checks for number of different type of workers
     const numberofHarvesters = _.sum(
@@ -27,14 +21,14 @@ const creepSpawner = {
       Game.creeps,
       c => c.memory.role === "builder"
     );
-    // const numberofRepairers = _.sum(
-    //   Game.creeps,
-    //   c => c.memory.role === "repairer"
-    // );
-    // const numberofWallRepairers = _.sum(
-    //   Game.creeps,
-    //   c => c.memory.role === "wallrepairer"
-    // );
+    const numberofRepairers = _.sum(
+      Game.creeps,
+      c => c.memory.role === "repairer"
+    );
+    const numberofWallRepairers = _.sum(
+      Game.creeps,
+      c => c.memory.role === "wallrepairer"
+    );
 
     let newName = undefined;
 
@@ -42,45 +36,41 @@ const creepSpawner = {
     if (numberofHarvesters < minimumNumberOfHarvesters) {
       newName = Game.spawns.Spawn1.createCreep(
         [WORK, WORK, CARRY, MOVE],
-        undefined,
+        `Harvester_${Game.time.toString()}`,
         { role: "harvester" }
       );
-      nameCounterHarvesters++;
     } else if (numberofUpgraders < minimumNumberOfUpgraders) {
       newName = Game.spawns.Spawn1.createCreep(
         [WORK, CARRY, MOVE, MOVE],
-        undefined,
+        `Upgrader_${Game.time.toString()}`,
         { role: "upgrader" }
       );
-      nameCounterUpgraders++;
-      // } else if (numberofRepairers < minimumNumberOfRepairers) {
-      //   newName = Game.spawns.Spawn1.createCreep(
-      //     [WORK, WORK, CARRY, MOVE],
-      //     `Repairer ${nameCounterRepairers}`,
-      //     { role: "repairer" }
-      //   );
-      //   nameCounterRepairers++;
-      // } else if (numberofWallRepairs < minimumNumberOfWallRepairers) {
-      //   newName = Game.spawns.Spawn1.createCreep(
-      //     [WORK, WORK, CARRY, MOVE],
-      //     `Wall Repairer ${nameCounterWallsRepairers}`,
-      //     { role: "wallrepairer" }
-      //   );
-      //   nameCounterWallsRepairers++;
+    } else if (numberofRepairers < minimumNumberOfRepairers) {
+      newName = Game.spawns.Spawn1.createCreep(
+        [WORK, WORK, CARRY, MOVE],
+        undefined,
+        { role: "repairer" }
+      );
+      nameCounterRepairers++;
+    } else if (numberofWallRepairs < minimumNumberOfWallRepairers) {
+      nameCounterWallsRepairers++;
+      newName = Game.spawns.Spawn1.createCreep(
+        [WORK, WORK, CARRY, MOVE],
+        undefined,
+        { role: "wallrepairer" }
+      );
     } else if (numberofBuilders < minimumNumberOfBuilders) {
       newName = Game.spawns.Spawn1.createCreep(
         [WORK, WORK, CARRY, MOVE],
-        `Builder ${nameCounterBuilders}`,
+        undefined,
         { role: "builder" }
       );
-      nameCounterBuilders++;
     } else {
       newName = Game.spawns.Spawn1.createCreep(
         [WORK, CARRY, MOVE, MOVE],
-        `Builder ${nameCounterBuilders}`,
+        undefined,
         { role: "builder" }
       );
-      nameCounterBuilders++;
     }
   }
 };
