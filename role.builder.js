@@ -1,3 +1,5 @@
+const roleHarvester = require("role.harvester");
+
 const roleBuilder = {
   /** @param {Creep} creep **/
   run: function(creep) {
@@ -24,11 +26,14 @@ const roleBuilder = {
             visualizePathStyle: { stroke: "#ffffff" }
           });
         }
+      } else if (constructionSite === undefined) {
+        // If no construction sites:
+        roleHarvester.run(creep);
       }
     } else {
-      let sources = creep.room.find(FIND_SOURCES);
-      if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-        creep.moveTo(sources[0], { visualizePathStyle: { stroke: "#ffaa00" } });
+      let sources = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
+      if (creep.harvest(sources) == ERR_NOT_IN_RANGE) {
+        creep.moveTo(sources, { visualizePathStyle: { stroke: "#ffaa00" } });
       }
     }
   }

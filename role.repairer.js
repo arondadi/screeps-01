@@ -1,4 +1,4 @@
-var roleBuilder = require("role.builder");
+const roleBuilder = require("role.builder");
 
 const roleRepairer = {
   /** @param {Creep} creep **/
@@ -14,7 +14,7 @@ const roleRepairer = {
 
     if (creep.memory.building) {
       // find closest constructionSite
-      var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+      const structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
         // the second argument for findClosestByPath is an object which takes
         // a property called filter which can be a function
         // we use the arrow operator to define it
